@@ -33,6 +33,14 @@ def get_subjects():
     subjects = Subject.query.all()
     return [sub.to_dict() for sub in subjects], 200
 
+@app.route('/subjects/<int:id>')
+def find_subject_by_id(id):
+    subject = Subject.query.filter(Subject.id == id).first()
+    if not subject:
+        return {'error': 'Subject not found'}, 404
+    else:
+        return subject.to_dict(), 200
+
 @app.route('/grades')
 def get_grades():
     grades = Grade.query.all()
